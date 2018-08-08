@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="marginNormal">10dp</dimen>
+
+    <dimen name="fontSizeNormal">24dp</dimen>
+    <dimen name="marginLarge">25dp</dimen>
+    <dimen name="fontSizeLarge">30dp</dimen>
+    <dimen name="fontSizeSmall">15dp</dimen>
+    <dimen name="fontSizeExtraSmall">12dp</dimen>
+</resources>
