@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "151155090904",
+    "firebase_url": "https://smash-em.firebaseio.com",
+    "project_id": "smash-em",
+    "storage_bucket": "smash-em.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:151155090904:android:82ae8433519e8ac4",
+        "android_client_info": {
+          "package_name": "com.androappdroid.smashem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "151155090904-qr7v7c6e6vhp9fj9i06sqtau0e1pabvb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.androappdroid.smashem",
+            "certificate_hash": "3b659b18687d917a6ea4fdd04a72c279eb5bc805"
+          }
+        },
+        {
+          "client_id": "151155090904-edtdl11pjcfq6arrs3jlt3db4ts2a5lg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmecn4oMpNc7j314NpzPab7pl_lEUCQKc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "151155090904-edtdl11pjcfq6arrs3jlt3db4ts2a5lg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

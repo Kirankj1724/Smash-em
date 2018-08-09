@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/marginSmall">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tie_name_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="text"
+                android:hint="USER-NAME"
+                android:gravity="center"
+                android:textSize="@dimen/fontSizeNormal"
+                android:textStyle="bold"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginSmall"
+            android:padding="@dimen/marginSmall">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tie_email_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="textEmailAddress"
+                android:hint="USER-EMAIL"
+                android:gravity="center"
+                android:textSize="@dimen/fontSizeNormal"
+                android:textStyle="bold"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btn_play_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Let's play!"
+            android:textStyle="bold"
+            android:textSize="@dimen/fontSizeSmall"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/marginNormal"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

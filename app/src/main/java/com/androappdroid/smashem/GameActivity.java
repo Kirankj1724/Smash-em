@@ -1,27 +1,28 @@
 package com.androappdroid.smashem;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.DateFormat;
+import com.androappdroid.smashem.Models.UserInfoModel;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,7 +30,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private int cellCount=5;
     private int[] arrayCellID;
     private Button buttonStartGame;
-    private TextView textViewScore,textViewMissHits,textViewVersion;
+    private TextView textViewScore,textViewMissHits,textViewVersion,textViewTopScore;
     private Handler handlerGameClock;
     private int delay = 1*1000; //1 second=1000 milisecond, 15*1000=15seconds
     private Runnable runnable;
@@ -38,6 +39,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView imageViewSelected;
     private int prevPos=-1,totalScore=0,totalMissHits=3,currentPosition=-1;
     private Dialog dialogGameOver;
+    private UserInfoModel userInfoModel;
+    private FirebaseDatabase fbInstance;
+    private DatabaseReference root,user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +53,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         textViewScore=findViewById(R.id.tv_score_game);
         textViewMissHits=findViewById(R.id.tv_mh_game);
         textViewVersion=findViewById(R.id.tv_version_game);
+        textViewTopScore=findViewById(R.id.tv_ts_game);
 
         init();
         setVersion();
+        checkForUserData();
 
         buttonStartGame.setOnClickListener(this);
+    }
+
+    private void checkForUserData() {
+        SharedPreferences sharedPreferences=getSharedPreferences("SP_SMASH_EM",MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("userInfoModel", "");
+
+        if(json!=null && json.length()>0)
+        {
+            userInfoModel = gson.fromJson(json, UserInfoModel.class);
+            textViewTopScore.setText(""+userInfoModel.getTopScore());
+
+        }
     }
 
     private void setVersion() {
@@ -68,6 +87,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init() {
+
+        fbInstance = FirebaseDatabase.getInstance();
+        root = fbInstance.getReference("userInfo");
+        user=root.child("user");
 
         dialogGameOver=DialogManager.getGameOverDialog(this);
         Button buttonGameOver=dialogGameOver.findViewById(R.id.btn_go_cdgo);
@@ -113,6 +136,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                             if(view.getId()==currentPosition)
                             {
                                 totalScore=totalScore+1;
+                                if(userInfoModel.getTopScore()<totalScore)
+                                {
+                                    textViewTopScore.setText(""+totalScore);
+                                }
                                 textViewScore.setText(""+totalScore);
                                 imageView.setImageResource(R.drawable.gp_clicked);
                                 nextLevel(totalScore);
@@ -173,8 +200,30 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btn_go_cdgo :
+                submitScore(totalScore);
                 dismissGameOver();
+                break;
         }
+    }
+
+    private void submitScore(int score) {
+
+        if(score>userInfoModel.getTopScore())
+        {
+            user.child("topScore").setValue(score);
+            userInfoModel.setTopScore(score);
+            storeUserData(userInfoModel);
+        }
+    }
+
+    private void storeUserData(UserInfoModel infoModel) {
+        SharedPreferences sharedPreferences=getSharedPreferences("SP_SMASH_EM",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(infoModel);
+        editor.putString("userInfoModel",json);
+        editor.apply();
     }
 
     private void dismissGameOver() {

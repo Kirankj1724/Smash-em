@@ -7,4 +7,5 @@
     <dimen name="fontSizeLarge">30dp</dimen>
     <dimen name="fontSizeSmall">15dp</dimen>
     <dimen name="fontSizeExtraSmall">12dp</dimen>
+    <dimen name="marginSmall">5dp</dimen>
 </resources>
